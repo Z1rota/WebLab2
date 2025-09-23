@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: #8c7272;
+    width: 100%;
+    padding: 0;
+}
+
+.container {
+    background: rgba(71, 179, 39, 0.67);
+    margin: auto auto;
+    text-align: center;
+
+
+}
+.lab-name {
+    font-family: "Rubik Puddles", monospace;
+    font-size: 200%;
+    text-align: center;
+    background: #dc28df;
+
+}
+.graph {
+    margin: 1%;
+
+}
