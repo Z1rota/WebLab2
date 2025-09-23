@@ -25,13 +25,13 @@ function drawAxes() {
     ctx.lineTo(centerX, canvas.height);
     ctx.stroke();
 
-    // Подписи и засечки
+
     ctx.fillStyle = "#333";
     ctx.font = "12px Arial";
     for (let i = -5; i <= 5; i++) {
         if (i === 0) continue;
 
-        // Засечки по X
+
         let x = centerX + i * scale;
         ctx.fillText(i, x - 5, centerY + 15);
         ctx.beginPath();
@@ -39,7 +39,7 @@ function drawAxes() {
         ctx.lineTo(x, centerY + 3);
         ctx.stroke();
 
-        // Засечки по Y
+
         let y = centerY - i * scale;
         ctx.fillText(i, centerX + 5, y + 5);
         ctx.beginPath();
@@ -48,7 +48,7 @@ function drawAxes() {
         ctx.stroke();
     }
 
-    // Подпись нуля
+
     ctx.fillText("0", centerX + 5, centerY + 15);
 }
 
@@ -57,24 +57,32 @@ canvas.addEventListener("click", function(e) {
     let rect = canvas.getBoundingClientRect();
     let x_cord = e.clientX - rect.left;
     let y_cord = e.clientY - rect.top;
-    let r_cord = document.querySelector("input[name='Rchange']:checked").value;
-    if (!r_cord) showNotification("cords: "+x_cord+" "+ y_cord+ " "+r_cord,true)
+    let r_cord= NaN;
+
+    if (document.querySelector("input[name='Rchange']:checked") == null)  {
+        showNotification("Выберите R",true)
+    } else {
+        r_cord = document.querySelector("input[name='Rchange']:checked").value;
+
+    }
 
     // Преобразуем в координаты системы (инвертируем Y)
     let x = ((x_cord - centerX) / scale).toFixed(3);
     let y = ((centerY - y_cord) / scale).toFixed(3);
-
-
-    // Выводим в консоль и на экран
-    showNotification("cords: "+x+" "+ y+ " "+r_cord,false);
-
-    // Если нужно отправить куда-то — раскомментируй:
-    // request({ x: x, y: y });
+    request({ x: x, y: y, r: r_cord});
 });
 
-// Заглушка (на случай, если понадобится)
+
 function request(data) {
-    console.log("Отправка:", data);
+    document.getElementById("Xchange").value=data.x;
+    document.getElementById("Ychange").value=data.y;
+    if ((isNaN(data.x))||(isNaN(data.y))||isNaN(data.r)) {
+        if ((data.x == null) || (data.y == null) || (data.r == null)) {
+            showNotification("Проверьте, что все значения указаны", true)
+        }
+    } else {
+        document.getElementById('graphForm').submit();
+    }
 }
 
 // Стартуем

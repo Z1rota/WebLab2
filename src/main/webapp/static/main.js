@@ -29,3 +29,12 @@ function setupInputValidation() {
     validateInput(yInput);
 }
 setupInputValidation();
+
+
+function setXValue(button, x) {
+    document.querySelectorAll('.x-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    button.classList.add('active');
+    document.getElementById('Xchange').value = x;
+}

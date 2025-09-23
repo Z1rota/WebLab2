@@ -1,5 +1,7 @@
 package org.ziro;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,16 +15,26 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        double x = Double.parseDouble(req.getParameter("Ychange"));
-        resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = resp.getWriter();
-        out.println("<html><head><title>Привет</title></head>");
-        out.println("<body>");
-        out.println("<p>значение Y: "+x+"</p>");
-        out.println("</body></html>");
-        out.flush();
+        Double x;
+        Double y;
+        Double r;
+        try {
+            y = Double.parseDouble(req.getParameter("Ychange"));
+            x = Double.parseDouble(req.getParameter("Xchange"));
+            r = Double.parseDouble(req.getParameter("Rchange"));
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/Area");
+            dispatcher.forward(req,resp);
+
+        } catch (NumberFormatException | NullPointerException | ServletException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Вы Ввели недопустимые данные!");
+        }
 
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,"Еще раз ты отправишь POST метод и я взорву тебя");
     }
 
 
