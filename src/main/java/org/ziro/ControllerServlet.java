@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/Controller")
 public class ControllerServlet extends HttpServlet {
+    public ControllerServlet() {}
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -27,6 +28,7 @@ public class ControllerServlet extends HttpServlet {
 
         } catch (NumberFormatException | NullPointerException | ServletException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Вы Ввели недопустимые данные!");
+            System.out.println(e.getMessage());
         }
 
 

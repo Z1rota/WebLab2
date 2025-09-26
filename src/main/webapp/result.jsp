@@ -1,10 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.ziro.beans.ResultBean" %>
+<%@ page import="org.ziro.beans.StorageBean" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
-    <title>Результаты</title>
+    <title>Ответики</title>
     <meta charset="UTF-8">
     <style>
         body {
+            background-color: yellowgreen;
             margin: 0;
         }
         #results {
@@ -69,13 +74,6 @@
             font-weight: 600;
         }
 
-        .result-hit {
-            color: #27ae60;
-        }
-
-        .result-miss {
-            color: #e74c3c;
-        }
 
         #results-table td:nth-child(n+5) {
             font-family: 'Times New Roman', monospace;
@@ -91,10 +89,8 @@
 </head>
 <body>
 <div class="container" style="background-color: yellowgreen">
-    <p style="text-align: center;font-size: 30px; margin-top: 0">Результаты</p>
-    <div class=point-data>
-        Ядерный пиздец
-    </div>
+    <p style="text-align: center;font-size: 30px; margin-top: 0">И че ты тут натыкал</p>
+
 
     <div id="results">
         <h3>Результаты:</h3>
@@ -111,18 +107,38 @@
                 </tr>
                 </thead>
                 <tbody>
+                <%
+                    @SuppressWarnings("unchecked")
+                    StorageBean storage = (StorageBean) session.getAttribute("results");
+                    List<ResultBean> results = (storage != null) ? storage.getResultList() : Collections.EMPTY_LIST;
+                    if (results != null && !results.isEmpty()) {
+                        for (ResultBean res: results) {
+                %>
+                <tr>
+                    <td><%= res.getX() %></td>
+                    <td><%= res.getY() %></td>
+                    <td><%= res.getR() %></td>
+                    <td><%= res.getHit() ? "Попал" : "Мимо" %></td>
+                    <td><%= res.getStartTime() != null ? res.getStartTime() : "" %></td>
+                    <td><%= String.format("%.4f",(res.getExecutionTime()/1_000_000.0)) %></td>
+                </tr>
+                <%
+                    }
+                } else {
+                %>
+                <tr>
+                    <td colspan="6" style="text-align: center;">Нет результатов</td>
+                </tr>
+                <%
+                    }
+                %>
                 </tbody>
             </table>
         </div>
-
+    </div>
+ <a href="index.jsp" style="display: flex;justify-content: center;align-items: center; text-decoration: none;">
+    <button> Вернуться назад</button>
+ </a>
 </div>
-
-
-<script>var res= document.getAttribute("result")
-console.log(res.valueOf());
-</script>
-<%=(boolean) request.getAttribute("result")%>
-
-
 </body>
     </html>

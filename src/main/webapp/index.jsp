@@ -1,3 +1,7 @@
+<%@ page import="org.ziro.beans.ResultBean" %>
+<%@ page import="org.ziro.beans.StorageBean" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -5,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
-    <title>Орешки биг боб</title>
+    <title>Депортация</title>
     <meta charset="UTF-8">
 </head>
 <body>
@@ -68,6 +72,32 @@
                 </tr>
                 </thead>
                 <tbody>
+                <%
+                    @SuppressWarnings("unchecked")
+                    StorageBean storage = (StorageBean) session.getAttribute("results");
+                    List<ResultBean> results = (storage != null) ? storage.getResultList() : Collections.EMPTY_LIST;
+                    if (results != null && !results.isEmpty()) {
+                        for (ResultBean res: results) {
+                %>
+                <tr>
+                    <td><%= res.getX() %></td>
+                    <td><%= res.getY() %></td>
+                    <td><%= res.getR() %></td>
+                    <td><%= res.getHit() ? "Попал" : "Мимо" %></td>
+                    <td><%= res.getStartTime() != null ? res.getStartTime() : "" %></td>
+                    <td><%=String.format("%.4f",(res.getExecutionTime()/1_000_000.0)) %></td>
+                </tr>
+                <%
+                    }
+                } else {
+                %>
+                <tr>
+                    <td colspan="6" style="text-align: center;">Нет результатов</td>
+                </tr>
+                <%
+                    }
+                %>
+                </tbody>
                 </tbody>
             </table>
         </div>
@@ -75,6 +105,19 @@
 
 
 </div>
+<script>
+    const storedPoints = [
+        <%
+        if (results != null) {
+            for (ResultBean res : results) {
+        %>
+        { x: <%= res.getX() %>, y: <%= res.getY() %>, hit: <%= res.getHit() ? "true" : "false" %> },
+        <%
+            }
+        }
+        %>
+    ];
+</script>
 <script src="static/utils.js"></script>
 <script src="static/graph.js"></script>
 <script src="static/main.js"></script>

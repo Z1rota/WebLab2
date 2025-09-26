@@ -1,7 +1,6 @@
-package org.ziro;
+package org.ziro.beans;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class ResultBean implements Serializable {
     private double x;
@@ -10,7 +9,6 @@ public class ResultBean implements Serializable {
     private boolean hit;
     private String startTime;
     private long executionTime;
-    private List<ResultBean> results;
 
 
     public ResultBean() {}
@@ -53,15 +51,5 @@ public class ResultBean implements Serializable {
     }
     public long getExecutionTime() {
         return executionTime;
-    }
-    public void addResult(ResultBean result) {
-        this.results.add(result);
-    }
-
-    public void setResults(List<ResultBean> results) {
-        this.results = results;
-    }
-    public List<ResultBean> getResults() {
-        return results;
     }
 }

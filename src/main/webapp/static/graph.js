@@ -25,6 +25,7 @@ function redrawCanvas() {
     }
 
     drawAxes();
+    drawStoredPoints();
 }
 
 function drawBatman(r) {
@@ -149,22 +150,35 @@ canvas.addEventListener('click', function (e) {
 
     const { x, y } = convertCanvasToSystem(xPixel, yPixel);
 
-    // Валидация
+
     if (isNaN(x) || isNaN(y)) {
         showNotification('Некорректные координаты', true);
         return;
     }
 
-    // Заполняем форму и отправляем
+
     document.getElementById('Xchange').value = x.toFixed(3);
     document.getElementById('Ychange').value = y.toFixed(3);
     document.getElementById('graphForm').submit();
 });
 
-// === Слушатели на изменение R ===
+
 document.querySelectorAll("input[name='Rchange']").forEach(button => {
     button.addEventListener('change', redrawCanvas);
 });
 
-// === Инициализация ===
+function drawStoredPoints() {
+    if (typeof storedPoints === 'undefined') return;
+    storedPoints.forEach(p => {
+        const px = originX + p.x * scale;
+        const py = originY - p.y * scale;
+        ctx.beginPath();
+        ctx.arc(px, py, 4, 0, Math.PI * 2);
+        ctx.fillStyle = p.hit ? 'green' : 'red';
+        ctx.fill();
+        ctx.stroke();
+    });
+}
+
+
 redrawCanvas();

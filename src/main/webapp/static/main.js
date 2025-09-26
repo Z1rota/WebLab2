@@ -42,7 +42,7 @@ function validateNums() {
         showNotification("Введите валидные значения!", true);
         return false;
     } else {
-        if (y > 5 || y < 3) {
+        if (y > 5 || y < -3) {
             showNotification("Y не в допустимом радиусе!", true);
             return false
         }
