@@ -1,4 +1,4 @@
-export function showNotification(message, isError = true) {
+function showNotification(message, isError = true) {
     let notificationContainer = document.getElementById('notification-container');
     if (!notificationContainer) {
         notificationContainer = document.createElement('div');

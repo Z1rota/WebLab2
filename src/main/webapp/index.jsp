@@ -29,8 +29,10 @@
                 <form action="Controller" method="GET" id="graphForm">
                     <label><input type="radio" name="Rchange" value="1"> R=1</label>
                     <label><input type="radio" name="Rchange" value="2"> R=2</label>
-                    <label><input type="radio" name="Rchange" value="3"> R=3</label> <br><br>
-                    <label>Y: <input type="text" name="Ychange" id="Ychange" placeholder="от -3 до 5"></label> <br><br>
+                    <label><input type="radio" name="Rchange" value="3"> R=3</label>
+                    <label><input type="radio" name="Rchange" value="4"> R=4</label>
+                    <label><input type="radio" name="Rchange" value="5"> R=5</label><br>
+                    <label>Y: <input type="text" name="Ychange" id="Ychange" placeholder="от -3 до 5"></label> <br>
                     <div>
                         X:
                         <input type="hidden" name="Xchange" id="Xchange" value="">
@@ -45,7 +47,7 @@
                         <button type="button" class="x-btn" onclick="setXValue(this, 3)">3</button>
                     </div>
 
-                    <button type="submit">Применить</button>
+                    <button type="submit">Отправить</button>
                 </form>
             </div>
         </div>
@@ -73,8 +75,8 @@
 
 
 </div>
-<script type=module src="static/utils.js"></script>
-<script type=module src="static/graph.js"></script>
+<script src="static/utils.js"></script>
+<script src="static/graph.js"></script>
 <script src="static/main.js"></script>
 </body>
 </html>
